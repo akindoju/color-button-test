@@ -39,11 +39,25 @@ test("checkbox functionality", () => {
   const checkbox = screen.getByRole("checkbox");
   const colorBtn = screen.getByRole("button", { name: "Change to blue" });
 
-  //when checkbox is enabled
+  //when checkbox is checked
   fireEvent.click(checkbox);
   expect(colorBtn).toBeDisabled();
+  expect(colorBtn).toHaveStyle({ backgroundColor: "grey" });
 
-  //when checkbox is disabled
+  //when checkbox is unchecked
   fireEvent.click(checkbox);
   expect(colorBtn).toBeEnabled();
+  expect(colorBtn).toHaveStyle({ backgroundColor: "red" });
+
+  //when checkbox is unchecked but button is clicked
+  fireEvent.click(colorBtn);
+  expect(colorBtn).toHaveStyle({ backgroundColor: "blue" });
+
+  //when btn is clicked to blue then checkbox is checked
+  fireEvent.click(checkbox);
+  expect(colorBtn).toHaveStyle({ backgroundColor: "grey" });
+
+  //when checkbox is unchecked and style is blue
+  fireEvent.click(checkbox);
+  expect(colorBtn).toHaveStyle({ backgroundColor: "blue" });
 });
